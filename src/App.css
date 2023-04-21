@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
 
-  /* --- Site colours --- */
+  /* --- Site colours and fonts --- */
   --grey1: #f9f9fb;
   --grey2: #eeedf2;
   --grey3: #cccccc;
@@ -13,6 +13,11 @@
   --green2: #92d4d0;
   --green3: #449690;
   --green4: #00403b;
+
+  --font1: 'Urbanist';
+  --font2: 'Outfit';
+
+  font-family: var(--font1);
 }
 
 /* --- Header --- */
@@ -27,6 +32,9 @@ header {
   text-decoration: none;
   display: flex;
 }
+.logo > div > h3{
+  font-weight: 400;
+}
 nav {
   min-width: 1200px;
   max-width: 1600px;
@@ -37,4 +45,7 @@ nav {
 .menu-item {
   color: var(--green2);
   display: flex;
+}
+.menu-item > h3 {
+  font-weight: 400;
 }
