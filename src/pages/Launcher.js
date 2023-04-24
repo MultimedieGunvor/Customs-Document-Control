@@ -1,25 +1,47 @@
-import { collection, getDocs } from "firebase/firestore";
-// import { useState } from "react";
+import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
+import { useState, useEffect } from "react";
 
 import { db } from "../firebaseConfig";
 
 export default function Launcher() {
 
-    // const [Manifests, SetManifests] = useState([]);
-    const manifests = [];
-    async function getManifests() {
-        const querySnapshot = await getDocs(collection(db, "manifests"));
-        querySnapshot.forEach((manifest) => {
-            let item = [];
-            item.push(manifest.id);
-            item.push(manifest.data());
-            manifests.push(item);            
-        })
-        console.log("manifests: ", manifests);
-        return manifests;
-    };
-    getManifests();
-    console.log("Testing ", manifests);
+    const [Manifests, SetManifests] = useState([]);
+    // let manifests = [];
+    // let manifests = {};
+    // async function getManifests() {
+    //     const querySnapshot = await getDocs(collection(db, "manifests"));
+    //     querySnapshot.forEach((manifest) => {
+    //         // let item = [];
+    //         // item.push(manifest.id);
+    //         // item.push(manifest.data());
+
+    //         // const item = {
+    //         //     id: manifest.id,
+    //         //     data: manifest.data()
+    //         // }
+    //         // manifests.push(item);
+
+    //         let itemId = manifest.id.slice(-5);
+    //         manifests[itemId] = { "id" : manifest.id, "data" : manifest.data()};
+    //     })
+    //     // console.log("manifests: ", manifests[0][0]);
+    //     // return manifests;
+    // };
+    // getManifests();
+    // console.log("Testing ", manifests);
+
+    useEffect(() => {
+        const manifestRef = collection(db, "manifests");
+        const q = query(manifestRef, orderBy("date", "desc"));
+        onSnapshot(q, (snapshot) => {
+            const manifests = snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+            SetManifests(manifests);
+            console.log(manifests[0]);
+        });
+    }, []);
 
     return (
         <div>
