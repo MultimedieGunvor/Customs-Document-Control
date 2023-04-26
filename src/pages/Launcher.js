@@ -2,33 +2,11 @@ import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
 import { useState, useEffect } from "react";
 
 import { db } from "../firebaseConfig";
+import MakeManifests from "../components/MakeManifests";
 
 export default function Launcher() {
 
     const [Manifests, SetManifests] = useState([]);
-    // let manifests = [];
-    // let manifests = {};
-    // async function getManifests() {
-    //     const querySnapshot = await getDocs(collection(db, "manifests"));
-    //     querySnapshot.forEach((manifest) => {
-    //         // let item = [];
-    //         // item.push(manifest.id);
-    //         // item.push(manifest.data());
-
-    //         // const item = {
-    //         //     id: manifest.id,
-    //         //     data: manifest.data()
-    //         // }
-    //         // manifests.push(item);
-
-    //         let itemId = manifest.id.slice(-5);
-    //         manifests[itemId] = { "id" : manifest.id, "data" : manifest.data()};
-    //     })
-    //     // console.log("manifests: ", manifests[0][0]);
-    //     // return manifests;
-    // };
-    // getManifests();
-    // console.log("Testing ", manifests);
 
     useEffect(() => {
         const manifestRef = collection(db, "manifests");
@@ -39,7 +17,7 @@ export default function Launcher() {
                 ...doc.data(),
             }));
             SetManifests(manifests);
-            console.log(manifests[0]);
+            console.log(manifests[0].date.toDate());
         });
     }, []);
 
@@ -92,7 +70,8 @@ export default function Launcher() {
                     <div>PICit</div>
                 </div>
             </div>
-            <div className="manifest-box">
+            <MakeManifests manifests={Manifests} />
+            {/* <div className="manifest-box">
                 <div className="folderNo manifest-header">Folder no</div>
                 <div className="folderId manifest-header">Folder ID</div>
                 <div className="date manifest-header">Date</div>
@@ -126,7 +105,7 @@ export default function Launcher() {
                 <div className="div31"> </div>
                 <div className="div32"> </div>
                 <div className="div33"> </div>
-            </div>
+            </div> */}
         </div>
     );
 }
