@@ -17,12 +17,13 @@ export default function Launcher() {
                 ...doc.data(),
             }));
             SetManifests(manifests);
-            console.log(manifests[0].date.toDate());
+            console.log(manifests[0]);
         });
     }, []);
 
     return (
         <div>
+            <h1>Manifest list</h1>
             <div className="filter-box">
                 <legend>Show range</legend>
                 <select id="select-range">
@@ -33,11 +34,13 @@ export default function Launcher() {
                     <option value="year">Year</option>
                     <option value="all">All</option>
                 </select>
+                <legend>Show type</legend>
                 <select id="select-type">
-                    <option value="all">All</option> {/* Gør til default */}
+                    <option value="all">All</option> {/* Gør til default + lav filterfunktion */}
                     <option value="import">Import</option>
                     <option value="export">Export</option>
                 </select>
+                <legend>Show termID</legend>
                 <select id="select-termID"> {/* Hvis tid: generér dynamisk ud fra manifest-data */}
                     <option value="all">All</option> {/* Gør til default */}
                     <option value="bk9">BK9</option>
@@ -55,6 +58,7 @@ export default function Launcher() {
                     <option value="f">F</option>
                     <option value="kl">KL</option>
                 </select>
+                <legend>Show status</legend>
                 <select id="select-status">
                     <option value="all">All</option> 
                     <option value="working">Working</option> {/* Gør til default */}
@@ -62,6 +66,7 @@ export default function Launcher() {
                     <option value="wait">Wait</option>
                     <option value="notDone">Not done</option>
                 </select>
+                <legend>Party</legend>
                 <div className="party"> {/* Hvis tid: generér dynamisk ud fra manifest-data */}
                     <legend>Party</legend>
                     <div>PICit</div>

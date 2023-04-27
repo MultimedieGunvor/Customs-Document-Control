@@ -3,12 +3,12 @@ export default function MakeManifests ({manifests}) {
     
     function getDate(date) {
         const jsDate = date.toDate();
+        console.log("date ", date);
         return jsDate.toLocaleDateString();
     }
 
     function getDocsTotal(manifest) {
         const totalDocs = Object.keys(manifest).length;
-        console.log(totalDocs);
         return totalDocs-12;
     }
 
@@ -17,7 +17,7 @@ export default function MakeManifests ({manifests}) {
     return (
         <div className="manifest-box">
             <div className="header-box">
-                <div className="folderNo manifest-header">Folder no</div>
+                <div className="folderNo manifest-header">Folder no</div> {/* --- Hvis tid: generér dynamisk ud fra manifest keys. F.eks: Object.keys(manifests[0]) ---*/}
                 <div className="folderId manifest-header">Folder ID</div>
                 <div className="date manifest-header">Date</div>
                 <div className="type manifest-header">Type</div>
@@ -32,8 +32,8 @@ export default function MakeManifests ({manifests}) {
             {manifests.map((manifest) => (
                 <div className={`manifests ${manifest.folderNo}-row`}
                 key={manifest.id}
-                onClick= {() => navigate("/manifests", 
-                    {state: manifest})}> {/* --- onClick/onDoubleClick leads to export/import page ---*/}
+                onClick= {() => navigate("/manifest", 
+                    {state: manifest})}> 
                     <div>{manifest.folderNo}</div>
                     <div>{manifest.id}</div>
                     <div>{getDate(manifest.date)}</div>
