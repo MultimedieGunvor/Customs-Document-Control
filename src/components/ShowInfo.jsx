@@ -1,6 +1,6 @@
 import { Timestamp } from "firebase/firestore";
 
-export default function ShowInfo ({info, type}) {
+export default function ShowInfo ({info}) {
     const secs = info.etaDate.seconds;
     const nanosecs = info.etaDate.nanoseconds;
     const eta = new Timestamp(secs, nanosecs);
@@ -64,7 +64,7 @@ export default function ShowInfo ({info, type}) {
                     <legend>Cust Ref filter</legend>
                     <input placeholder="Which cust ref?"></input>
                 </div>
-                {type === "export" ? (
+                {info.type === "export" ? (
                 <div>
                     <legend>Consignor filter</legend>
                     <input placeholder="Which consignor?"></input>

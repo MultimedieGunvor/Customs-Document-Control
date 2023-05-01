@@ -8,14 +8,13 @@ export default function ManifestPage() {
     console.log("location: ", location);
     const {state} = location;
     console.log("state ", state);
-    const type = state.type;
 
 
     return (
-        <div>
+        <div className="manifest-content">
             <Link to="/" className="back-btn">Back to manifest list</Link>
-            <ShowInfo info={state} type={type} />
-            <ShowDocs docs={state} type={type} />
+            <ShowInfo info={state} />
+            <ShowDocs documents={state} docs={state.docs}/>
             <div className="btm-functions"></div>
         </div>
     );
