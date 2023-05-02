@@ -23,7 +23,7 @@ export default function ShowInfo ({info}) {
                 </div>
                 <div className="info">
                     <legend>Call info</legend>
-                    <div>{info.callInfo}</div>
+                    <div>{info.callInfo === "" ? "No call info" : info.callInfo}</div>
                 </div>
                 <div className="info">
                     <legend>Terminal LoCode</legend>

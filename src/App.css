@@ -52,10 +52,40 @@ nav {
 }
 
 /* --- Launcher --- */
+h1 {
+  color: var(--green4);
+}
 .filter-box {
   background-color: var(--grey1);
   border-radius: 10px;
-  border-color: 1px solid var(--grey2);
+  border: 1px solid var(--grey2);
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 50px;
+  grid-row-gap: 0px;
+}
+.party > div {
+  background-color: var(--white);
+  border: 1px solid var(--grey2);
+  border-radius: 15px;
+  /* padding: 0 5px; */
+}
+.party2 {
+  position: relative;
+}
+.party2 > div {
+  position: absolute;
+  width: 99%;
+  bottom: 0;
+  background-color: var(--white);
+  color: var(--grey4);
+  border: 1px solid var(--grey2);
+  border-radius: 15px;
+}
+.manifest-box {
+  border: 1px solid var(--grey2);
+  border-radius: 15px;
 }
 .header-box {
   display: grid;
@@ -63,6 +93,8 @@ nav {
   grid-template-rows: 1fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
+  background-color: var(--grey1);
+  color: var(--grey4)
 }
 .manifests {
   display: grid;
@@ -72,7 +104,7 @@ nav {
   grid-row-gap: 0px;
   cursor: pointer;
 }
-.manifests:nth-child(even) {
+.manifests:nth-child(odd) {
   background-color: var(--grey1);
 }
 
@@ -103,8 +135,8 @@ nav {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, 1fr);
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
+  grid-column-gap: 30px;
+  grid-row-gap: 10px;
   background-color: var(--grey1);
   border: 1px solid var(--grey2);
   border-radius: 15px;
@@ -114,6 +146,7 @@ nav {
   background-color: var(--white);
   border: 1px solid var(--grey2);
   border-radius: 15px;
+  color: var(--grey4);
 }
 .filters { 
   grid-area: 1 / 6 / 3 / 10;
@@ -126,6 +159,9 @@ nav {
   border: 1px solid var(--grey2);
   border-radius: 15px;
 }
+.filters > div > legend {
+  color: var(--grey4);
+} 
 .edi-log { 
   grid-area: 1 / 10 / 4 / 13; 
   border: 1px solid var(--grey2);
@@ -144,6 +180,7 @@ nav {
   background-color: var(--grey1);
   border: 1px solid var(--grey2);
   border-radius: 15px;
+  color: var(--grey4);
 }
 /* The switch - the box around the slider */
 .switch {
@@ -188,15 +225,39 @@ nav {
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color: var(--green3);
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px var(--green3);
 }
 
 input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
+}
+
+/* --- Show Docs --- */
+.docs-box {
+  font-size: small;
+}
+.docs-header-box {
+  display: grid;
+  grid-template-columns: repeat(25, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  background-color: var(--grey1);
+  color: var(--grey4);
+}
+.docs-content {
+  display: grid;
+  grid-template-columns: repeat(25, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+.docs-content:nth-child(odd) {
+  background-color: var(--grey1);
 }

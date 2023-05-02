@@ -17,12 +17,12 @@ export default function ShowDocs ({documents, docs}) {
                 <div className="container docs-header">Container</div>
                 <div className="lr docs-header">L/R</div>
                 <div className="vet docs-header">Vet</div>
-                <div className="pol docs-header">Pol/Pod</div>
+                <div className="pol docs-header">Pol/Pod</div> {/* Title to be determined by pod/pol filter */}
                 <div className="custRef docs-header">Cust Ref</div>
                 <div className="status-code docs-header">Status Code</div>
                 {documents.type === "import" ? (
                 <div className="consignee-consignor docs-header">Consignee</div>) : (
-                <div className="consignee-consignor docs-header">Consignor</div>)}
+                <div className="consignee-consignor docs-header">Consignor</div>)} {/* If show notify is checked, change title to Notify Party */}
                 <div className="m docs-header">M</div>
                 <div className="custRefType docs-header">Cust Ref Type</div>
                 <div className="itemNo docs-header">Item No</div>
