@@ -1,14 +1,43 @@
+import { useState } from "react";
+import Popup from "./Popup";
 
 export default function ShowDocs ({documents, docs}) {
-    console.log("docs: ", docs);
+    // console.log("docs: ", docs);
     const DOCS = Object.entries(docs);
-    console.log("DOCS", DOCS);
+    // console.log("DOCS", DOCS);
 
     function getCustRefs(obj) {
         const values = Object.values(obj);
-        console.log(values);
+        // console.log(values);
         return values.join(" ");
+    };
+
+    // const [show, setShow] = useState(false);
+    // const openPopup = () => {
+    //     setShow(true);
+    //     console.log(show);
+    // };
+    // const closePopup = () => {
+    //     setShow(false);
+    // };
+
+    const [show, setShow] = useState(false);
+    const [DocKey, setDocKey] = useState();
+    // const openPopup = () => {
+    //     setShow(true);
+    //     console.log(show);
+    // };
+    function getDocKey (prop) {
+        const docKey = prop;
+        console.log("docKey: ", docKey);
+        setDocKey(docKey);
+        // console.log(show);
     }
+    const closePopup = () => {
+        setShow(false);
+    };
+    
+
     return (
         <div className="docs-box">
             <div className="docs-header-box">
@@ -45,6 +74,10 @@ export default function ShowDocs ({documents, docs}) {
             {DOCS.map((DOC) => (
                 <div className="docs-content"
                 key={DOC[0]}
+                onClick={() => {
+                    setShow(true)
+                    getDocKey(DOC[0])
+                    console.log("testing docKey", DocKey)}}
                 > 
                     <div>{DOC[1].cdcStatus}</div>
                     <div>{DOC[0]}</div>
@@ -75,6 +108,7 @@ export default function ShowDocs ({documents, docs}) {
                     {documents.type === "import" ? (
                     <div>{DOC[1].deliveryPlace}</div>) : (
                     <div>{DOC[1].authorityNote}</div>)}
+                    {show === true && DocKey === DOC[0]? (<Popup doc={DOC} show={show} onClose={closePopup}/>) : ("")}
                 </div>
             ))}
         </div>

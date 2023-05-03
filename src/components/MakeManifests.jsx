@@ -3,7 +3,7 @@ export default function MakeManifests ({manifests}) {
     
     function getDate(date) {
         const jsDate = date.toDate();
-        console.log("date ", date);
+        // console.log("date ", date);
         return jsDate.toLocaleDateString();
     }
 
