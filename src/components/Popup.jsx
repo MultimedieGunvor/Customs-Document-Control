@@ -1,13 +1,21 @@
 import * as React from "react";
+import ModWeight from "./ModWeight";
 
-const Popup = ({doc, show, onClose}) => {
+const Popup = ({doc, show, onClose, folder}) => {
     console.log("show i popup: ", show);
     if(!show) {
         return null;
     }
+    const [option, setOption] = useState("popup");
+    console.log(option);
+
+    function modWeight() {
+        setOption("modWeight");
+    };
     return (
         <div className="popup" onClick={onClose}>
             <div className="popup-content" onClick={(e) => e.stopPropagation()}>
+                {option === "popup" ? (
                 <ul className="popup-options">
                     <li className="option">Copy cell</li>
                     <li className="option">Release container</li>
@@ -15,7 +23,7 @@ const Popup = ({doc, show, onClose}) => {
                     <li className="option">Set auto lock</li>
                     <li className="option">Accept colli and weight differences</li>
                     <li className="option">Clear accepted differences</li>
-                    <li className="option">Modify colli and B/L weight</li> {/* onClick={props.openPopup("modWeight")} ???*/}
+                    <li className="option" onClick={modWeight}>Modify colli and B/L weight</li>
                     <li className="option">Modify POD</li>
                     <li className="option">Edit/add container note</li>
                     <li className="option">Edit cust ref note</li>
@@ -29,6 +37,9 @@ const Popup = ({doc, show, onClose}) => {
                     <li className="option">View</li>
                     <li className="option">Compact container no</li>
                 </ul>
+                ) : (
+                <ModWeight BL={doc} folder={folder} onClose={onClose}/>
+                )}
             </div>
         </div>
     );

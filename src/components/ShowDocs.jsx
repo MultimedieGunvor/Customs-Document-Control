@@ -41,35 +41,35 @@ export default function ShowDocs ({documents, docs}) {
     return (
         <div className="docs-box">
             <div className="docs-header-box">
-                <div className="cdc docs-header">CDC Status</div>
-                <div className="bl docs-header">B/L</div>
-                <div className="container docs-header">Container</div>
-                <div className="lr docs-header">L/R</div>
-                <div className="vet docs-header">Vet</div>
-                <div className="pol docs-header">Pol/Pod</div> {/* Title to be determined by pod/pol filter */}
-                <div className="custRef docs-header">Cust Ref</div>
-                <div className="status-code docs-header">Status Code</div>
+                <div>CDC Status</div>
+                <div>B/L</div>
+                <div>Container</div>
+                <div>L/R</div>
+                <div>Vet</div>
+                <div>Pol/Pod</div> {/* Title to be determined by pod/pol filter */}
+                <div>Cust Ref</div>
+                <div>Status Code</div>
                 {documents.type === "import" ? (
-                <div className="consignee-consignor docs-header">Consignee</div>) : (
-                <div className="consignee-consignor docs-header">Consignor</div>)} {/* If show notify is checked, change title to Notify Party */}
-                <div className="m docs-header">M</div>
-                <div className="custRefType docs-header">Cust Ref Type</div>
-                <div className="itemNo docs-header">Item No</div>
-                <div className="ciBl docs-header">CI BL</div>
-                <div className="ciCust docs-header">CI Cust</div>
-                <div className="wBl docs-header">W BL</div>
-                <div className="wCust docs-header">W Cust</div>
-                <div className="trnsDocType docs-header">TrnsDocType</div>
-                <div className="mig docs-header">MIG Responsible</div>
-                <div className="customsStatus docs-header">Customs Status</div>
-                <div className="customsData docs-header">Customs Data</div>
-                <div className="containerNote docs-header">Container Note</div>
-                <div className="custRefNote docs-header">Cust Ref Note</div>
-                <div className="discReason docs-header">Disc Reason</div>
-                <div className="skat docs-header">SKAT Manifest Status</div>
+                <div>Consignee</div>) : (
+                <div>Consignor</div>)} {/* If show notify is checked, change title to Notify Party */}
+                <div>M</div>
+                <div>Cust Ref Type</div>
+                <div>Item No</div>
+                <div>CI BL</div>
+                <div>CI Cust</div>
+                <div>W BL</div>
+                <div>W Cust</div>
+                <div>TrnsDocType</div>
+                <div>MIG Responsible</div>
+                <div>Customs Status</div>
+                <div>Customs Data</div>
+                <div>Container Note</div>
+                <div>Cust Ref Note</div>
+                <div>Disc Reason</div>
+                <div>SKAT Manifest Status</div>
                 {documents.type === "import" ? (
-                <div className="delivery docs-header">Delivery Place</div>) : (
-                <div className="authority docs-header">Authority Note</div>)}
+                <div>Delivery Place</div>) : (
+                <div>Authority Note</div>)}
             </div>
             {DOCS.map((DOC) => (
                 <div className="docs-content"
@@ -108,7 +108,7 @@ export default function ShowDocs ({documents, docs}) {
                     {documents.type === "import" ? (
                     <div>{DOC[1].deliveryPlace}</div>) : (
                     <div>{DOC[1].authorityNote}</div>)}
-                    {show === true && DocKey === DOC[0]? (<Popup doc={DOC} show={show} onClose={closePopup}/>) : ("")}
+                    {show === true && DocKey === DOC[0]? (<Popup doc={DOC} show={show} onClose={closePopup} folder={documents}/>) : ("")}
                 </div>
             ))}
         </div>

@@ -17,17 +17,17 @@ export default function MakeManifests ({manifests}) {
     return (
         <div className="manifest-box">
             <div className="header-box">
-                <div className="folderNo manifest-header">Folder no</div> {/* --- Hvis tid: generér dynamisk ud fra manifest keys. F.eks: Object.keys(manifests[0]) ---*/}
-                <div className="folderId manifest-header">Folder ID</div>
-                <div className="date manifest-header">Date</div>
-                <div className="type manifest-header">Type</div>
-                <div className="termId manifest-header">Terminal ID</div>
-                <div className="mot manifest-header">Primary MOT</div>
-                <div className="status manifest-header">Status</div>
-                <div className="docs manifest-header">Documents</div>
-                <div className="refNo manifest-header">Ref no</div>
-                <div className="callInfo manifest-header">Call info</div>
-                <div className="canRead manifest-header">Can read</div>
+                <div>Folder no</div> {/* --- Hvis tid: generér dynamisk ud fra manifest keys. F.eks: Object.keys(manifests[0]) ---*/}
+                <div>Folder ID</div>
+                <div>Date</div>
+                <div>Type</div>
+                <div>Terminal ID</div>
+                <div>Primary MOT</div>
+                <div>Status</div>
+                <div>Documents</div>
+                <div>Ref no</div>
+                <div>Call info</div>
+                <div>Can read</div>
             </div>
             {manifests.map((manifest) => (
                 <div className={`manifests ${manifest.folderNo}-row`}
