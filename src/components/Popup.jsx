@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import ModWeight from "./ModWeight";
+import ModPod from "./ModPod";
 
 const Popup = ({doc, show, onClose, folder}) => {
     const [option, setOption] = useState("popup");
@@ -11,14 +12,14 @@ const Popup = ({doc, show, onClose, folder}) => {
     }
     console.log("option: ", option);
 
-    function modWeight() { /* Change to selectOption(prop)? Then pass the option as a prop where the function is called? */
-        setOption("modWeight");
+    function chooseOption(prop) { /* Change to selectOption(prop)? Then pass the option as a prop where the function is called? */
+        setOption(prop);
     };
 
     return (
         <div className="popup">
             <div className="popup-content" onClick={(e) => e.stopPropagation()}>
-                {option === "popup" ? (
+                {option === "popup" ? ( 
                 <ul className="popup-options">
                     <li className="option">Copy cell</li>
                     <li className="option">Release container</li>
@@ -26,8 +27,8 @@ const Popup = ({doc, show, onClose, folder}) => {
                     <li className="option">Set auto lock</li>
                     <li className="option">Accept colli and weight differences</li>
                     <li className="option">Clear accepted differences</li>
-                    <li className="option clickable" onClick={modWeight}>Modify colli and B/L weight</li>
-                    <li className="option">Modify POD</li>
+                    <li className="option clickable" onClick={setOption("modWeight")}>Modify colli and B/L weight</li>
+                    <li className="option clickable" onClick={setOption("modPod")}>Modify POD</li>
                     <li className="option">Edit/add container note</li>
                     <li className="option">Edit cust ref note</li>
                     <li className="option">BL consignee and consignor</li>
@@ -40,8 +41,10 @@ const Popup = ({doc, show, onClose, folder}) => {
                     <li className="option">View</li>
                     <li className="option">Compact container no</li>
                 </ul>
+                ) : option === "modWeight" ? (
+                <ModWeight BL={doc} folder={folder} onClose={onClose}/> //  <-- Fix this!
                 ) : (
-                <ModWeight BL={doc} folder={folder} onClose={onClose}/>
+                <ModPod BL={doc} folder={folder} onClose={onClose}/>
                 )}
             </div>
         </div>
