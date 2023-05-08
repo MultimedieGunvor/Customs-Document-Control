@@ -1,27 +1,30 @@
 import * as React from "react";
 import { writeBatch, doc } from "firebase/firestore";
 import { db } from "../firebaseConfig";
+import { useState } from "react";
 
 const ModWeight = ({BL, folder, onClose}) => {
     const batch = writeBatch(db);
+    const [Value, setValue] = useState({});
 
     const handleChange = (e) => {
-        const blRef = doc(db, "manifests", folder.id, "docs", BL[0]);
-        console.log("Testing e.target: ", e.target.name, " + ", e.target.value);
-        batch.update(blRef, {[e.target.name]: e.target.value});
+        const name = e.target.name;
+        const value = e.target.value;
+        setValue(values => ({...values, [name]: Number(value)}))
+        // const blRef = doc(db, "manifests", folder.id, "docs", BL[0]);
+        // console.log("Testing setValue: ", Value.ciBl);
+        // batch.update(blRef, {[name]: value});
     };
 
     const handleSubmit = async () => {
+        const blRef = doc(db, "manifests", folder.id, "docs", BL[0]);
+        batch.update(blRef, {"ciBl": Value.ciBl});
+        batch.update(blRef, {"wBl": Value.wBl});
         console.log("Batch: ", batch);
         // await batch.commit();
     };
-    function getValue(prop) {
-        const str = prop.toString();
-        console.log(typeof str);
-        const value = Number(str);
-        console.log(typeof value);
-        return value;
-    }
+
+    
     return (
         <div className="popup-weight">
             <h2>Modify weight</h2>
@@ -42,9 +45,9 @@ const ModWeight = ({BL, folder, onClose}) => {
                     <legend>Colli</legend>
                     <input 
                         type="number" 
-                        name="ciBl" 
-                        value={getValue(BL[1].ciBl)}
-                        // value={BL[1].ciBl}
+                        inputMode="numeric"
+                        name="ciBl"
+                        value={Value.ciBl || BL[1].ciBl}
                         onChange={(e) => handleChange(e)}>
                     </input>
                 </div>
@@ -53,7 +56,7 @@ const ModWeight = ({BL, folder, onClose}) => {
                     <input 
                         type="number" 
                         name="wBl" 
-                        value={BL[1].wBl}
+                        value={Value.wBl || BL[1].wBl}
                         onChange={(e) => handleChange(e)}>
                     </input>
                 </div>
