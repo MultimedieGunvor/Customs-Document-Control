@@ -257,6 +257,7 @@ input:checked + .slider:before {
   grid-template-rows: 1fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
+  cursor: pointer;
 }
 .docs-content:nth-child(odd) {
   background-color: var(--grey1);
@@ -274,11 +275,15 @@ input:checked + .slider:before {
   align-items: center;
   justify-content: center;
   z-index: 1;
+  cursor: context-menu;
 }
 .popup-content {
   background-color: var(--white);
   position: relative;
 }
-.option {
-  text-decoration: none;
+.popup-options {
+  list-style: none;
+}
+.clickable {
+  cursor: pointer;
 }

@@ -14,6 +14,13 @@ const ModWeight = ({BL, folder, onClose}) => {
     const handleSubmit = async () => {
         console.log("Batch: ", batch);
         // await batch.commit();
+    };
+    function getValue(prop) {
+        const str = prop.toString();
+        console.log(typeof str);
+        const value = Number(str);
+        console.log(typeof value);
+        return value;
     }
     return (
         <div className="popup-weight">
@@ -36,7 +43,8 @@ const ModWeight = ({BL, folder, onClose}) => {
                     <input 
                         type="number" 
                         name="ciBl" 
-                        value={BL[1].ciBl}
+                        value={getValue(BL[1].ciBl)}
+                        // value={BL[1].ciBl}
                         onChange={(e) => handleChange(e)}>
                     </input>
                 </div>

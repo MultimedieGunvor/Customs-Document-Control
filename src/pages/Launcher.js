@@ -17,7 +17,7 @@ export default function Launcher() {
                 ...doc.data(),
             }));
             SetManifests(manifests);
-            console.log(manifests[0]);
+            // console.log(manifests[0]);
         });
     }, []);
 

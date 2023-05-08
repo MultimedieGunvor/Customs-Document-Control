@@ -1,19 +1,24 @@
 import * as React from "react";
+import { useState } from "react";
 import ModWeight from "./ModWeight";
 
 const Popup = ({doc, show, onClose, folder}) => {
-    console.log("show i popup: ", show);
+    const [option, setOption] = useState("popup");
+    // console.log("show i popup: ", show);
+
     if(!show) {
         return null;
     }
-    const [option, setOption] = useState("popup");
-    console.log(option);
+    console.log("option: ", option);
 
-    function modWeight() {
+    function modWeight() { /* Change to selectOption(prop)? Then pass the option as a prop where the function is called? */
         setOption("modWeight");
     };
+
     return (
-        <div className="popup" onClick={onClose}>
+        <div className="popup" onClick={() => {
+            onClose()
+            console.log("Click in popup")}}>
             <div className="popup-content" onClick={(e) => e.stopPropagation()}>
                 {option === "popup" ? (
                 <ul className="popup-options">
@@ -23,7 +28,7 @@ const Popup = ({doc, show, onClose, folder}) => {
                     <li className="option">Set auto lock</li>
                     <li className="option">Accept colli and weight differences</li>
                     <li className="option">Clear accepted differences</li>
-                    <li className="option" onClick={modWeight}>Modify colli and B/L weight</li>
+                    <li className="option clickable" onClick={modWeight}>Modify colli and B/L weight</li>
                     <li className="option">Modify POD</li>
                     <li className="option">Edit/add container note</li>
                     <li className="option">Edit cust ref note</li>
