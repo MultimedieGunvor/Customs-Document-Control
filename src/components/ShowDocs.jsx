@@ -2,36 +2,22 @@ import { useState } from "react";
 import Popup from "./Popup";
 
 export default function ShowDocs ({documents, docs}) {
-    // console.log("docs: ", docs);
+
     const DOCS = Object.entries(docs);
-    // console.log("DOCS", DOCS);
 
     function getCustRefs(obj) {
         const values = Object.values(obj);
-        // console.log(values);
+
         return values.join(" ");
     };
 
-    // const [show, setShow] = useState(false);
-    // const openPopup = () => {
-    //     setShow(true);
-    //     console.log(show);
-    // };
-    // const closePopup = () => {
-    //     setShow(false);
-    // };
-
     const [show, setShow] = useState(false);
     const [DocKey, setDocKey] = useState();
-    // const openPopup = () => {
-    //     setShow(true);
-    //     console.log(show);
-    // };
+
     function getDocKey (prop) {
         const docKey = prop;
         console.log("docKey: ", docKey);
         setDocKey(docKey);
-        // console.log(show);
     }
     const closePopup = () => {
         setShow(false);
@@ -75,9 +61,8 @@ export default function ShowDocs ({documents, docs}) {
                 <div className="docs-content"
                 key={DOC[0]}
                 onClick={() => {
-                    setShow(true)
-                    getDocKey(DOC[0])
-                    console.log("testing docKey", DocKey)}}
+                    show === false ? setShow(true) : setShow(false)
+                    getDocKey(DOC[0])}}
                 > 
                     <div>{DOC[1].cdcStatus}</div>
                     <div>{DOC[0]}</div>

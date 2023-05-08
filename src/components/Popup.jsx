@@ -16,7 +16,7 @@ const Popup = ({doc, show, onClose, folder}) => {
     };
 
     return (
-        <div className="popup" onClick={onClose}>
+        <div className="popup">
             <div className="popup-content" onClick={(e) => e.stopPropagation()}>
                 {option === "popup" ? (
                 <ul className="popup-options">

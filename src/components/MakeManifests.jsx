@@ -8,8 +8,8 @@ export default function MakeManifests ({manifests}) {
     }
 
     function getDocsTotal(manifest) {
-        const totalDocs = Object.keys(manifest).length;
-        return totalDocs-12;
+        const totalDocs = Object.keys(manifest.docs).length;
+        return totalDocs;
     }
 
     const navigate = useNavigate();

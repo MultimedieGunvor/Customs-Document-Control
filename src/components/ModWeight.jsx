@@ -11,17 +11,14 @@ const ModWeight = ({BL, folder, onClose}) => {
         const name = e.target.name;
         const value = e.target.value;
         setValue(values => ({...values, [name]: Number(value)}))
-        // const blRef = doc(db, "manifests", folder.id, "docs", BL[0]);
-        // console.log("Testing setValue: ", Value.ciBl);
-        // batch.update(blRef, {[name]: value});
     };
 
     const handleSubmit = async () => {
-        const blRef = doc(db, "manifests", folder.id, "docs", BL[0]);
-        batch.update(blRef, {"ciBl": Value.ciBl});
-        batch.update(blRef, {"wBl": Value.wBl});
-        console.log("Batch: ", batch);
-        // await batch.commit();
+        const blRef = doc(db, "manifests", folder.id);
+        batch.update(blRef, {[`docs.${BL[0]}.ciBl`]: Value.ciBl || BL[1].ciBl});
+        batch.update(blRef, {[`docs.${BL[0]}.wBl`]: Value.wBl || BL[1].wBl});
+        console.log("batch: ", batch);
+        await batch.commit();
     };
 
     
@@ -45,7 +42,6 @@ const ModWeight = ({BL, folder, onClose}) => {
                     <legend>Colli</legend>
                     <input 
                         type="number" 
-                        inputMode="numeric"
                         name="ciBl"
                         value={Value.ciBl || BL[1].ciBl}
                         onChange={(e) => handleChange(e)}>
@@ -66,7 +62,7 @@ const ModWeight = ({BL, folder, onClose}) => {
                 <div className="ok btn"
                 onClick={() => {
                     handleSubmit()
-                    // onClose
+                    onClose()
                 }}>OK</div>
             </div>
         </div>
