@@ -31,7 +31,7 @@ const Popup = ({doc, show, onClose, folder}) => {
                     <li className="option clickable" onClick={setOption("modPod")}>Modify POD</li>
                     <li className="option">Edit/add container note</li>
                     <li className="option">Edit cust ref note</li>
-                    <li className="option">BL consignee and consignor</li>
+                    <li className="option">View consignee and consignor</li>
                     <li className="option">Change status to wait at (5)</li>
                     <li className="option">Change status to locked (7)</li>
                     <li className="option">Change status to done (8nd)</li>
@@ -42,7 +42,7 @@ const Popup = ({doc, show, onClose, folder}) => {
                     <li className="option">Compact container no</li>
                 </ul>
                 ) : option === "modWeight" ? (
-                <ModWeight BL={doc} folder={folder} onClose={onClose}/> //  <-- Fix this!
+                <ModWeight BL={doc} folder={folder} onClose={onClose}/> //  <-- Fix this! Use switch instead
                 ) : (
                 <ModPod BL={doc} folder={folder} onClose={onClose}/>
                 )}
