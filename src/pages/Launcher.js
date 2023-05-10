@@ -6,6 +6,8 @@ import MakeManifests from "../components/MakeManifests";
 
 export default function Launcher() {
 
+    sessionStorage.clear();
+
     const [Manifests, SetManifests] = useState([]);
 
     useEffect(() => {

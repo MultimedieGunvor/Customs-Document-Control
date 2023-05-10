@@ -22,6 +22,20 @@ export default function ShowDocs ({documents, docs}) {
     const closePopup = () => {
         setShow(false);
     };
+
+    window.addEventListener('storage', () => {
+        // --- How do I save/add to dbUpdates. key just renders as key
+
+        let keys = Object.keys(sessionStorage);
+        let dbUpdates = {};
+        for (let key of keys) {
+            console.log(`${key}: ${sessionStorage.getItem(key)}`);
+            let item = sessionStorage.getItem(key);
+            let KEY = key.values();
+            dbUpdates.KEY = item;
+        }
+        console.log(dbUpdates);
+    });
     
 
     return (
@@ -69,7 +83,7 @@ export default function ShowDocs ({documents, docs}) {
                     <div>{DOC[1].container}</div>
                     <div>{DOC[1].lr}</div>
                     <div>{DOC[1].vet}</div>
-                    <div>{DOC[1].pol}</div> {/* Call pol/pod filter function here */}
+                    <div>{DOC[1].pod}</div> {/* Change to {dbUpdates.pod || DOC[1].pod} --- Also call pol/pod filter function here */}
                     <div>{getCustRefs(DOC[1].custRef)}</div>
                     <div>{DOC[1].statusCode}</div>
                     {documents.type === "import" ? (

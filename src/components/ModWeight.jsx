@@ -19,6 +19,7 @@ const ModWeight = ({BL, folder, onClose}) => {
         batch.update(blRef, {[`docs.${BL[0]}.wBl`]: Value.wBl || BL[1].wBl});
         console.log("batch: ", batch);
         await batch.commit();
+        onClose();
     };
 
     
@@ -62,7 +63,6 @@ const ModWeight = ({BL, folder, onClose}) => {
                 <div className="ok btn"
                 onClick={() => {
                     handleSubmit()
-                    onClose()
                 }}>OK</div>
             </div>
         </div>

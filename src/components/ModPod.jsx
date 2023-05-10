@@ -16,6 +16,10 @@ const ModPod = ({BL, folder, onClose}) => {
     const handleSubmit = async () => {
         const blRef = doc(db, "manifests", folder.id);
         await updateDoc(blRef, {[`docs.${BL[0]}.pod`]: Value.pod || BL[1].pod});
+        sessionStorage.setItem('pod', Value.pod || BL[0].pod);
+        console.log('sessionStorage: ', sessionStorage);
+        window.dispatchEvent(new Event('storage'));
+        onClose(); // --- Remember to add Alert or Toast Message ---
     };
 
     
@@ -39,7 +43,6 @@ const ModPod = ({BL, folder, onClose}) => {
                 <div className="ok btn"
                 onClick={() => {
                     handleSubmit()
-                    onClose()
                 }}>OK</div>
             </div>
         </div>
