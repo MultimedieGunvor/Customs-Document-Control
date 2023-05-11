@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../firebaseConfig";
 import Popup from "./Popup";
 
 export default function ShowDocs ({documents, docs}) {
@@ -13,6 +15,7 @@ export default function ShowDocs ({documents, docs}) {
 
     const [show, setShow] = useState(false);
     const [DocKey, setDocKey] = useState();
+    const [updates, setUpdates] = useState();
 
     function getDocKey (prop) {
         const docKey = prop;
@@ -24,20 +27,34 @@ export default function ShowDocs ({documents, docs}) {
     };
 
     window.addEventListener('storage', () => {
-        // --- How do I save/add to dbUpdates. key just renders as key
-
         let keys = Object.keys(sessionStorage);
-        let dbUpdates = {};
-        for (let key of keys) {
-            console.log(`${key}: ${sessionStorage.getItem(key)}`);
-            let item = sessionStorage.getItem(key);
-            let KEY = key.values();
-            dbUpdates.KEY = item;
-        }
-        console.log(dbUpdates);
+        setUpdates(keys); 
     });
-    
+    function getValue(key, prop) {
+        if(updates === undefined)
+        return prop // TO be continued...
+    }
 
+    // window.addEventListener('storage', () => { // -- This all works, but it's cumbersome. Find a better way?
+    //     let keys = Object.keys(sessionStorage);
+    //     let dbUpdates = {};
+    //     for (let key of keys) {
+    //         let item = sessionStorage.getItem(key);
+    //         dbUpdates[key] = item;
+    //         console.log(dbUpdates);
+    //     }
+    //     console.log("dbUpdates: ", dbUpdates);
+    //     setUpdates(dbUpdates);
+    // });
+    // function getPod(prop) {
+    //     if (updates === undefined)
+    //     return prop
+    //     else if (!updates.pod)
+    //     return prop
+    //     else return updates.pod 
+    // };
+
+    console.log(updates);
     return (
         <div className="docs-box">
             <div className="docs-header-box">
@@ -83,7 +100,7 @@ export default function ShowDocs ({documents, docs}) {
                     <div>{DOC[1].container}</div>
                     <div>{DOC[1].lr}</div>
                     <div>{DOC[1].vet}</div>
-                    <div>{DOC[1].pod}</div> {/* Change to {dbUpdates.pod || DOC[1].pod} --- Also call pol/pod filter function here */}
+                    <div>{getPod(DOC[1].pod)}</div> {/*  Also call pol/pod filter function here */}
                     <div>{getCustRefs(DOC[1].custRef)}</div>
                     <div>{DOC[1].statusCode}</div>
                     {documents.type === "import" ? (
@@ -107,7 +124,7 @@ export default function ShowDocs ({documents, docs}) {
                     {documents.type === "import" ? (
                     <div>{DOC[1].deliveryPlace}</div>) : (
                     <div>{DOC[1].authorityNote}</div>)}
-                    {show === true && DocKey === DOC[0]? (<Popup doc={DOC} show={show} onClose={closePopup} folder={documents}/>) : ("")}
+                    {show === true && DocKey === DOC[0]? (<Popup doc={DOC} show={show} onClose={closePopup} folder={documents} Pod={getPod(DOC[1].pod)}/>) : ("")}
                 </div>
             ))}
         </div>
