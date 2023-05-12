@@ -6,8 +6,6 @@ import MakeManifests from "../components/MakeManifests";
 
 export default function Launcher() {
 
-    sessionStorage.clear();
-
     const [Manifests, SetManifests] = useState([]);
 
     useEffect(() => {
@@ -19,7 +17,6 @@ export default function Launcher() {
                 ...doc.data(),
             }));
             SetManifests(manifests);
-            // console.log(manifests[0]);
         });
     }, []);
 

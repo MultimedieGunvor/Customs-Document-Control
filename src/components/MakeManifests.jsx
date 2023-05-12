@@ -18,7 +18,7 @@ export default function MakeManifests ({manifests}) {
     return (
         <div className="manifest-box">
             <div className="header-box">
-                <div>Folder no</div> {/* --- Hvis tid: generér dynamisk ud fra manifest keys. F.eks: Object.keys(manifests[0]) ---*/}
+                <div>Folder no</div> {/* --- Hvis tid: generér dynamisk ud fra manifest keys. F.eks: map over: Object.keys(manifests[0]) ---*/}
                 <div>Folder ID</div>
                 <div>Date</div>
                 <div>Type</div>

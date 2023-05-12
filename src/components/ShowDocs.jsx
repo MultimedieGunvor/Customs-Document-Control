@@ -29,10 +29,11 @@ export default function ShowDocs ({documents, docs}) {
     window.addEventListener('storage', () => {
         let keys = Object.keys(sessionStorage);
         setUpdates(keys); 
+        sessionStorage.clear();
     });
     function getValue(key, prop) {
         if(updates === undefined)
-        return prop // TO be continued...
+        return prop // TO be continued... Make it reload the entire manifest, so you don't have any problems when there's more than one doc!
     }
 
     // window.addEventListener('storage', () => { // -- This all works, but it's cumbersome. Find a better way?
@@ -53,22 +54,37 @@ export default function ShowDocs ({documents, docs}) {
     //     return prop
     //     else return updates.pod 
     // };
+    const checkType = (a, b) => {
+        documents.type === "import" ? (a) : (b) // Add && Notify Party === unchecked ... på en eller anden måde
+    }
+    const DocHeaders = () => {
+        const headers = ["CDC Status", "B/L", "Container", "L/R", "Vet", "Pol/Pod", "Cust Ref", "Status Code", checkType("Consignee", "Consignor"), "M", "Cust Ref Type", "Item No", "CI BL", "CI Cust", "W BL", "W Cust", "TrnsDocType", "MIG Responsible", "Customs Status", "Customs Status", "Customs Data", "Container Note", "Cust Ref Note", "Disc Reason", "SKAT Manifest Status", checkType("Delivery Place", "Authority Note")];
+        return (
+            <div className="docs-header-box">
+            {headers.map((header, index) => {
+                <div key={header+index}>{header}</div>
+            })}
+            </div>
+        );
+    };
+
 
     console.log(updates);
     return (
         <div className="docs-box">
-            <div className="docs-header-box">
+            <DocHeaders />
+            {/* <div className="docs-header-box">
                 <div>CDC Status</div>
                 <div>B/L</div>
                 <div>Container</div>
                 <div>L/R</div>
                 <div>Vet</div>
-                <div>Pol/Pod</div> {/* Title to be determined by pod/pol filter */}
+                <div>Pol/Pod</div>
                 <div>Cust Ref</div>
                 <div>Status Code</div>
                 {documents.type === "import" ? (
                 <div>Consignee</div>) : (
-                <div>Consignor</div>)} {/* If show notify is checked, change title to Notify Party */}
+                <div>Consignor</div>)} 
                 <div>M</div>
                 <div>Cust Ref Type</div>
                 <div>Item No</div>
@@ -87,7 +103,7 @@ export default function ShowDocs ({documents, docs}) {
                 {documents.type === "import" ? (
                 <div>Delivery Place</div>) : (
                 <div>Authority Note</div>)}
-            </div>
+            </div> */}
             {DOCS.map((DOC) => (
                 <div className="docs-content"
                 key={DOC[0]}

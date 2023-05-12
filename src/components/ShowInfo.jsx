@@ -2,6 +2,7 @@ import { Timestamp } from "firebase/firestore";
 
 export default function ShowInfo ({info}) {
     const secs = info.etaDate.seconds;
+    console.log("secs type: ", typeof secs);
     const nanosecs = info.etaDate.nanoseconds;
     const eta = new Timestamp(secs, nanosecs);
     const etaDate = eta.toDate().toLocaleDateString();
