@@ -19,6 +19,7 @@ const ModWeight = ({BL, folder, onClose}) => {
         batch.update(blRef, {[`docs.${BL[0]}.wBl`]: Value.wBl || BL[1].wBl});
         console.log("batch: ", batch);
         await batch.commit();
+        window.dispatchEvent(new Event('update'));
         onClose();
     };
 

@@ -9,8 +9,8 @@ export default function Launcher() {
     const [Manifests, SetManifests] = useState([]);
 
     useEffect(() => {
-        const manifestRef = collection(db, "manifests");
-        const q = query(manifestRef, orderBy("date", "desc"));
+        const collectionRef = collection(db, "manifests");
+        const q = query(collectionRef, orderBy("date", "desc"));
         onSnapshot(q, (snapshot) => {
             const manifests = snapshot.docs.map((doc) => ({
                 id: doc.id,
@@ -20,6 +20,11 @@ export default function Launcher() {
         });
     }, []);
 
+    const handleChange = (e) => {
+        sessionStorage.setItem('termId', e.target.value);
+        console.log(sessionStorage);
+        window.dispatchEvent(new Event("select")); 
+    }
     return (
         <div>
             <h1>Manifest list</h1>
@@ -45,22 +50,11 @@ export default function Launcher() {
                 </div>
                 <div className="termId">
                     <legend>Show termID</legend>
-                    <select id="select-termID"> {/* Hvis tid: generér dynamisk ud fra manifest-data */}
-                        <option value="all">All</option> {/* Gør til default */}
-                        <option value="bk9">BK9</option>
-                        <option value="tct">TCT</option>
-                        <option value="eur">EUR</option>
-                        <option value="cta">CTA</option>
-                        <option value="mtb">MTB</option>
-                        <option value="ch">CH</option>
-                        <option value="aal">AAL</option>
-                        <option value="apmt">APMT</option>
-                        <option value="aad">AAD</option>
-                        <option value="aat">AAT</option>
-                        <option value="q">Q</option>
-                        <option value="k">K</option>
-                        <option value="f">F</option>
-                        <option value="kl">KL</option>
+                    <select id="select-termID" onChange={handleChange}>
+                        <option value="all">All</option> 
+                        {Manifests.map((Manifest) => (
+                            <option key={Manifest+Manifest.terminalId} value={Manifest.terminalId}>{Manifest.terminalId}</option>
+                        ))}
                     </select>
                 </div>
                 <div className="status">

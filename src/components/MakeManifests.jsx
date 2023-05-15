@@ -15,21 +15,20 @@ export default function MakeManifests ({manifests}) {
 
     const navigate = useNavigate();
 
+    const ManifestHeaders = () => {
+        const headers = ["Folder no", "Folder ID", "Date", "Type", "Terminal ID", "Primary MOT", "Status", "Documents", "Ref no", "Call info", "Can read"];
+        return (
+            <div className="header-box">
+            {headers.map((header, index) => (
+                <div key={header+index}>{header}</div>
+            ))}
+            </div>
+        );
+    };
+
     return (
         <div className="manifest-box">
-            <div className="header-box">
-                <div>Folder no</div> {/* --- Hvis tid: generér dynamisk ud fra manifest keys. F.eks: map over: Object.keys(manifests[0]) ---*/}
-                <div>Folder ID</div>
-                <div>Date</div>
-                <div>Type</div>
-                <div>Terminal ID</div>
-                <div>Primary MOT</div>
-                <div>Status</div>
-                <div>Documents</div>
-                <div>Ref no</div>
-                <div>Call info</div>
-                <div>Can read</div>
-            </div>
+            <ManifestHeaders />
             {manifests.map((manifest) => (
                 <div className={`manifests ${manifest.folderNo}-row`}
                 key={manifest.id}
