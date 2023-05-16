@@ -7,6 +7,7 @@ import MakeManifests from "../components/MakeManifests";
 export default function Launcher() {
 
     const [Manifests, SetManifests] = useState([]);
+    const [filteredManifests, SetFilteredManifests] = useState([]);
 
     useEffect(() => {
         const collectionRef = collection(db, "manifests");

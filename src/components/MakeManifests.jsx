@@ -1,10 +1,18 @@
 import { useNavigate } from "react-router-dom";
 
 export default function MakeManifests ({manifests}) {
+
+    window.addEventListener('select', () => {
+        const filterKey = Object.keys(sessionStorage);
+        console.log("filterKey: ", filterKey);
+        const currentFilter = sessionStorage.getItem(filterKey);
+        console.log("currentFilter: ", currentFilter);
+        let filteredList = manifests.filter((listItem) => listItem.filterKey === currentFilter);
+        console.log("filteredList: ", filteredList); // --- Tilføj "do nothing"- funktion hvis "all" er valgt. Lav mapping som React fragment og kald denne eventlistener i koden. (Se også ShowDocs)
+    });
     
     function getDate(date) {
         const jsDate = date.toDate();
-        // console.log("date ", date);
         return jsDate.toLocaleDateString();
     }
 

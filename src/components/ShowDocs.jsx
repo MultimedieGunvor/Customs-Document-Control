@@ -10,7 +10,7 @@ export default function ShowDocs ({documents}) {
     function getCustRefs(obj) {
         const values = Object.values(obj);
 
-        return values.join(" ");
+        return values.join(", ");
     };
 
     const [show, setShow] = useState(false);
@@ -25,23 +25,6 @@ export default function ShowDocs ({documents}) {
         setShow(false);
     };
 
-    const checkType = (a, b) => {
-        if (documents.type === "import") {
-            return a
-        } else {
-            return b
-        } // Add && Notify Party === unchecked ... på en eller anden måde
-    };
-    const DocHeaders = () => {
-        const headers = ["CDC Status", "B/L", "Container", "L/R", "Vet", "Pol/Pod", "Cust Ref", "Status Code", checkType("Consignee", "Consignor"), "M", "Cust Ref Type", "Item No", "CI BL", "CI Cust", "W BL", "W Cust", "TrnsDocType", "MIG Responsible", "Customs Status", "Customs Data", "Container Note", "Cust Ref Note", "Disc Reason", "SKAT Manifest Status", checkType("Delivery Place", "Authority Note")];
-        return (
-            <div className="docs-header-box">
-            {headers.map((header, index) => (
-                <div key={header+index}>{header}</div>
-            ))}
-            </div>
-        );
-    };
     useEffect(() => {
         async function fetchData () {
             try {
@@ -99,6 +82,24 @@ export default function ShowDocs ({documents}) {
             </div>
         )))
     }
+
+    const checkType = (a, b) => {
+        if (documents.type === "import") {
+            return a
+        } else {
+            return b
+        } // Tilføj && Notify Party === unchecked 
+    };
+    const DocHeaders = () => {
+        const headers = ["CDC Status", "B/L", "Container", "L/R", "Vet", "Pol/Pod", "Cust Ref", "Status Code", checkType("Consignee", "Consignor"), "M", "Cust Ref Type", "Item No", "CI BL", "CI Cust", "W BL", "W Cust", "TrnsDocType", "MIG Responsible", "Customs Status", "Customs Data", "Container Note", "Cust Ref Note", "Disc Reason", "SKAT Manifest Status", checkType("Delivery Place", "Authority Note")];
+        return (
+            <div className="docs-header-box">
+            {headers.map((header, index) => (
+                <div key={header+index}>{header}</div>
+            ))}
+            </div>
+        );
+    };
 
     return (
         <div className="docs-box">

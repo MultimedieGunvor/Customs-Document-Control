@@ -14,7 +14,7 @@ export default function ManifestPage() {
         <div className="manifest-content">
             <Link to="/" className="back-btn">Back to manifest list</Link>
             <ShowInfo info={state} />
-            <ShowDocs documents={state} docs={state.docs}/>
+            <ShowDocs documents={state}/>
             <div className="btm-functions"></div>
         </div>
     );
