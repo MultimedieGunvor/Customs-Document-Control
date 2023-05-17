@@ -1,7 +1,9 @@
 import * as React from "react";
 import { writeBatch, doc } from "firebase/firestore";
-import { db } from "../firebaseConfig";
 import { useState } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { db } from "../firebaseConfig";
 
 const ModWeight = ({BL, folder, onClose}) => {
     const batch = writeBatch(db);
@@ -20,6 +22,7 @@ const ModWeight = ({BL, folder, onClose}) => {
         console.log("batch: ", batch);
         await batch.commit();
         window.dispatchEvent(new Event('update'));
+        toast.success(`Updated colli: ${Value.ciBl || BL[1].ciBl} weight: ${Value.wBl || BL[1].wBl}`);
         onClose();
     };
 

@@ -7,7 +7,6 @@ import MakeManifests from "../components/MakeManifests";
 export default function Launcher() {
 
     const [Manifests, SetManifests] = useState([]);
-    const [filteredManifests, SetFilteredManifests] = useState([]);
 
     useEffect(() => {
         const collectionRef = collection(db, "manifests");
@@ -21,8 +20,8 @@ export default function Launcher() {
         });
     }, []);
 
-    const handleChange = (e) => {
-        sessionStorage.setItem('termId', e.target.value);
+    const handleChange = (e, category) => {
+        sessionStorage.setItem(category, e.target.value);
         console.log(sessionStorage);
         window.dispatchEvent(new Event("select")); 
     }
@@ -51,7 +50,7 @@ export default function Launcher() {
                 </div>
                 <div className="termId">
                     <legend>Show termID</legend>
-                    <select id="select-termID" onChange={handleChange}>
+                    <select id="select-termID" onChange={handleChange(e, "terminalId")}>
                         <option value="all">All</option> 
                         {Manifests.map((Manifest) => (
                             <option key={Manifest+Manifest.terminalId} value={Manifest.terminalId}>{Manifest.terminalId}</option>

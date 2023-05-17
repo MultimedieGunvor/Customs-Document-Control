@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 import ShowDocs from "../components/ShowDocs";
 import ShowInfo from "../components/ShowInfo";
@@ -12,6 +13,17 @@ export default function ManifestPage() {
 
     return (
         <div className="manifest-content">
+            <ToastContainer 
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
             <Link to="/" className="back-btn">Back to manifest list</Link>
             <ShowInfo info={state} />
             <ShowDocs documents={state}/>

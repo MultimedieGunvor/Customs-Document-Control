@@ -1,7 +1,8 @@
 import * as React from "react";
 import { doc, updateDoc } from "firebase/firestore";
-import { db } from "../firebaseConfig";
 import { useState } from "react";
+import { toast } from "react-toastify";
+import { db } from "../firebaseConfig";
 
 const ModPod = ({BL, folder, onClose}) => {
 
@@ -17,7 +18,8 @@ const ModPod = ({BL, folder, onClose}) => {
         const blRef = doc(db, "manifests", folder.id);
         await updateDoc(blRef, {[`docs.${BL[0]}.pod`]: Value.pod || BL[1].pod});
         window.dispatchEvent(new Event('update'));
-        onClose(); // --- Remember to add Alert or Toast Message ---
+        toast.success(`Updated POD: ${Value.pod || BL[1].pod}`);
+        onClose(); 
     };
 
     

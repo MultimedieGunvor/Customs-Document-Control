@@ -107,6 +107,10 @@ h1 {
 .manifests:nth-child(odd) {
   background-color: var(--grey1);
 }
+.manifests:hover {
+  background-color: var(--green4);
+  color: var(--white);
+}
 
 /* --- ManifestPage --- */
 .manifest-content {

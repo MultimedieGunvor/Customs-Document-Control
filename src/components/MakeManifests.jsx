@@ -2,15 +2,6 @@ import { useNavigate } from "react-router-dom";
 
 export default function MakeManifests ({manifests}) {
 
-    window.addEventListener('select', () => {
-        const filterKey = Object.keys(sessionStorage);
-        console.log("filterKey: ", filterKey);
-        const currentFilter = sessionStorage.getItem(filterKey);
-        console.log("currentFilter: ", currentFilter);
-        let filteredList = manifests.filter((listItem) => listItem.filterKey === currentFilter);
-        console.log("filteredList: ", filteredList); // --- Tilføj "do nothing"- funktion hvis "all" er valgt. Lav mapping som React fragment og kald denne eventlistener i koden. (Se også ShowDocs)
-    });
-    
     function getDate(date) {
         const jsDate = date.toDate();
         return jsDate.toLocaleDateString();
@@ -34,10 +25,49 @@ export default function MakeManifests ({manifests}) {
         );
     };
 
+    const ManifestContent = () => {
+        window.addEventListener('select', () => {
+            const filterKey = Object.keys(sessionStorage);
+            console.log("filterKey: ", filterKey);
+            if (filterKey === "all") {
+                return
+            } else {
+                const currentFilter = sessionStorage.getItem(filterKey);
+                console.log("currentFilter: ", currentFilter);
+                const filteredList = manifests.filter((listItem) => listItem.filterKey === currentFilter);
+                console.log("filteredList: ", filteredList); 
+                return filteredList;
+            }
+        });
+        
+        const placeholder = filteredList ? filteredList : manifests;
+        sessionStorage.clear();
+        console.log("placeholder: ", placeholder);
+        placeholder.map((manifest) => (
+            <div className={`manifests ${manifest.folderNo}-row`}
+            key={manifest.id}
+            onClick= {() => navigate("/manifest", 
+                {state: manifest})}> 
+                <div>{manifest.folderNo}</div>
+                <div>{manifest.id}</div>
+                <div>{getDate(manifest.date)}</div>
+                <div>{manifest.type}</div>
+                <div>{manifest.terminalId}</div>
+                <div>{manifest.primaryMot}</div>
+                <div>{manifest.status}</div>
+                <div>{getDocsTotal(manifest)}</div>
+                <div>{manifest.refNo}</div>
+                <div>{manifest.callInfo}</div>
+                <div>{manifest.canRead}</div>
+            </div>
+        ))
+    }
+
     return (
         <div className="manifest-box">
             <ManifestHeaders />
-            {manifests.map((manifest) => (
+            <ManifestContent />
+            {/* {manifests.map((manifest) => (
                 <div className={`manifests ${manifest.folderNo}-row`}
                 key={manifest.id}
                 onClick= {() => navigate("/manifest", 
@@ -54,7 +84,7 @@ export default function MakeManifests ({manifests}) {
                     <div>{manifest.callInfo}</div>
                     <div>{manifest.canRead}</div>
                 </div>
-            ))}
+            ))} */}
         </div>
     )
 }
