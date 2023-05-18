@@ -266,7 +266,10 @@ input:checked + .slider:before {
 .docs-content:nth-child(odd) {
   background-color: var(--grey1);
 }
-
+.docs-content:hover {
+  background-color: var(--green4);
+  color: var(--white);
+}
 /* --- Popup --- */
 .popup {
   position: fixed;
@@ -275,6 +278,7 @@ input:checked + .slider:before {
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
+  color: var(--black);
   display: flex;
   align-items: center;
   justify-content: center;
