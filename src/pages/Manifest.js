@@ -15,7 +15,7 @@ export default function ManifestPage() {
         <div className="manifest-content">
             <ToastContainer 
                 position="top-center"
-                autoClose={5000}
+                autoClose={4000}
                 hideProgressBar={false}
                 newestOnTop={false}
                 closeOnClick

@@ -19,6 +19,11 @@
   --font2: 'Outfit';
 
   font-family: var(--font1);
+
+  /* --- Toastify-changes --- */
+  --toastify-color-success: var(--green3) !important;
+  --toastify-icon-color-success: var(--green3) !important;
+  --toastify-font-family: var(--font1) !important;
 }
 
 /* --- Header --- */
@@ -295,3 +300,8 @@ input:checked + .slider:before {
 .clickable {
   cursor: pointer;
 }
+
+/* --- Toast --- */
+/* .Toastify__toast--success {
+  background: var(--green1) !important;
+} */
