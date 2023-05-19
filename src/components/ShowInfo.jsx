@@ -7,42 +7,31 @@ export default function ShowInfo ({info}) {
     const eta = new Timestamp(secs, nanosecs);
     const etaDate = eta.toDate().toLocaleDateString();
 
+    const checkType = (a, b) => {
+        if (info.type === "import") {
+            return a
+        } else {
+            return b
+        }
+    };
+
+    const ManifestInfo = () => {
+        const Info = [["Folder no", info.folderNo], ["Folder type", info.type], ["Primary MOT", info.primaryMot], ["Call info", info.callInfo === "" ? "No call info" : info.callInfo], ["Terminal LoCode", info.terminalLoCode], ["Terminal ID", info.terminalId], ["ETA date", etaDate], ["Master status", info.masterStatus]];
+        return (
+            <div className="manifest-info">
+                {Info.map((item) => (
+                    <div className="info" key={item[0]}>
+                        <legend>{item[0]}</legend>
+                        <div>{item[1]}</div>
+                    </div>
+                ))}
+            </div>
+        );
+    };
+
     return (
         <div className="info-box">
-            <div className="manifest-info">
-                <div className="info">
-                    <legend>Folder no</legend>
-                    <div>{info.folderNo}</div>
-                </div>
-                <div className="info">
-                    <legend>Folder type</legend>
-                    <div>{info.type}</div>
-                </div>
-                <div className="info">
-                    <legend>Primary MOT</legend>
-                    <div>{info.primaryMot}</div>
-                </div>
-                <div className="info">
-                    <legend>Call info</legend>
-                    <div>{info.callInfo === "" ? "No call info" : info.callInfo}</div>
-                </div>
-                <div className="info">
-                    <legend>Terminal LoCode</legend>
-                    <div>{info.terminalLoCode}</div>
-                </div>
-                <div className="info">
-                    <legend>Terminal ID</legend>
-                    <div>{info.terminalId}</div>
-                </div>
-                <div className="info">
-                    <legend>ETA date</legend>
-                    <div>{etaDate}</div>
-                </div>
-                <div className="info">
-                    <legend>Master status</legend>
-                    <div>{info.status}</div>
-                </div>
-            </div>
+            <ManifestInfo />
             <div className="filters">
                 <div>
                     <legend>B/L filter</legend>
@@ -65,17 +54,10 @@ export default function ShowInfo ({info}) {
                     <legend>Cust Ref filter</legend>
                     <input placeholder="Which cust ref?"></input>
                 </div>
-                {info.type === "export" ? (
                 <div>
-                    <legend>Consignor filter</legend>
-                    <input placeholder="Which consignor?"></input>
+                    <legend>{checkType("Consignee filter", "Consignor filter")}</legend>
+                    <input placeholder={checkType("Which consignee?", "Which consignor?")}></input>
                 </div>
-                ) : (
-                <div>
-                    <legend>Consignee filter</legend>
-                    <input placeholder="Which consignee?"></input>
-                </div>
-                )}
                 <div>
                     <legend>View values</legend>
                     <select id="select-values">
@@ -86,7 +68,7 @@ export default function ShowInfo ({info}) {
             </div>
             <div className="edi-log">
                 <div>EDI log</div>
-                <div>Insert EDI log dynamically</div> {/* Generér dynamisk */}
+                <div>{info.ediLog}</div> {/* Tjek, om den renderer, eller om den skal pilles ved */}
             </div>
             <div className="vsa-info" placeholder="VSA info">VSA info</div>
             <div className="toggles">
