@@ -26,11 +26,11 @@ const ModPod = ({BL, folder, onClose}) => {
     return (
         <div className="popup-pod">
             <h2>Modify POD</h2>
-            <div>
+            <div className="original-pod">
                 <legend>Original POD</legend>
                 <div>{BL[1].pod}</div>
             </div>
-            <div>
+            <div className="new-pod">
                 <legend>New POD</legend>
                 <input 
                     type="text" 
@@ -38,7 +38,7 @@ const ModPod = ({BL, folder, onClose}) => {
                     onChange={(e) => handleChange(e)}>
                 </input>
             </div>
-            <div>
+            <div className="pod-btns">
                 <div className="cancel btn" onClick={onClose}>Cancel</div>
                 <div className="ok btn"
                 onClick={() => {

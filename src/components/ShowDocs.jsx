@@ -2,19 +2,20 @@ import { useState, useEffect } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import Popup from "./Popup";
+// import Hover from "./Hover";
 
 export default function ShowDocs ({documents}) {
 
     const [content, setContent] = useState([]);
+    const [show, setShow] = useState(false);
+    const [DocKey, setDocKey] = useState();
+    // const [hover, setHover] = useState(null);
 
     function getCustRefs(obj) {
         const values = Object.values(obj);
 
         return values.join(", ");
     };
-
-    const [show, setShow] = useState(false);
-    const [DocKey, setDocKey] = useState();
 
     function getDocKey (prop) {
         const docKey = prop;
@@ -44,6 +45,14 @@ export default function ShowDocs ({documents}) {
         });
     }, [documents.id]);
 
+    const checkType = (a, b) => {
+        if (documents.type === "import") {
+            return a
+        } else {
+            return b
+        } // Tilføj && Notify Party === unchecked 
+    };
+
     const DocContents = () => {
         return (
         content.map((item) => (
@@ -55,25 +64,30 @@ export default function ShowDocs ({documents}) {
             }}>
                 <div>{item[1].cdcStatus}</div>
                 <div>{item[0]}</div>
-                <div>{item[1].container}</div>
+                <div className="char-limit">{item[1].container}</div>
                 <div>{item[1].lr}</div>
                 <div>{item[1].vet}</div>
                 <div>{item[1].pod}</div>
-                <div>{getCustRefs(item[1].custRef)}</div>
+                <div className="char-limit" 
+                // onMouseEnter={() => setHover(getCustRefs(item[1].custRef))}
+                // onMouseLeave={() => setHover(false)}
+                >{getCustRefs(item[1].custRef)}
+                {/* {hover === getCustRefs(item[1].custRef) ? (<Hover props={getCustRefs(item[1].custRef)}/>) : ("")} */}
+                </div>
                 <div>{item[1].statusCode}</div>
-                <div>{checkType(item[1].consignee, item[1].consignor)}</div>
+                <div className="char-limit">{checkType(item[1].consignee, item[1].consignor)}</div>
                 <div>{item[1].m}</div>
-                <div>{item[1].custRefType}</div>
+                <div className="char-limit">{item[1].custRefType}</div> 
                 <div>{item[1].itemNo}</div>
                 <div>{item[1].ciBl}</div>
                 <div>{item[1].ciCust}</div>
                 <div>{item[1].wBl}</div>
                 <div>{item[1].wCust}</div>
                 <div>{item[1].trnsDocType}</div>
-                <div>{item[1].migResponsible}</div>
+                <div className="char-limit">{item[1].migResponsible}</div> 
                 <div>{item[1].customsStatus}</div>
                 <div>{item[1].customsData}</div>
-                <div>{item[1].containerNote}</div>
+                <div className="char-limit">{item[1].containerNote}</div>
                 <div>{item[1].custRefNote}</div>
                 <div>{item[1].discReason}</div>
                 <div>{item[1].skatManifestStatus}</div>
@@ -83,19 +97,12 @@ export default function ShowDocs ({documents}) {
         )))
     }
 
-    const checkType = (a, b) => {
-        if (documents.type === "import") {
-            return a
-        } else {
-            return b
-        } // Tilføj && Notify Party === unchecked 
-    };
     const DocHeaders = () => {
-        const headers = ["CDC Status", "B/L", "Container", "L/R", "Vet", "Pol/Pod", "Cust Ref", "Status Code", checkType("Consignee", "Consignor"), "M", "Cust Ref Type", "Item No", "CI BL", "CI Cust", "W BL", "W Cust", "TrnsDocType", "MIG Responsible", "Customs Status", "Customs Data", "Container Note", "Cust Ref Note", "Disc Reason", "SKAT Manifest Status", checkType("Delivery Place", "Authority Note")];
+        const headers = ["CDC Status", "B/L", "Container", "L/R", "Vet", "Pol/Pod", "Cust Ref", "Status Code", checkType("Consignee", "Consignor"), "M", "Cust Ref Type", "Item No", "CI BL", "CI Cust", "W BL", "W Cust", "Trns Doc Type", "MIG Responsible", "Customs Status", "Customs Data", "Container Note", "Cust Ref Note", "Disc Reason", "SKAT Manifest Status", checkType("Delivery Place", "Authority Note")];
         return (
             <div className="docs-header-box">
             {headers.map((header, index) => (
-                <div key={header+index}>{header}</div>
+                <div key={header+index} className="char-limit">{header}</div>
             ))}
             </div>
         );

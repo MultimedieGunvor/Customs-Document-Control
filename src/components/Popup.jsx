@@ -30,7 +30,7 @@ const Popup = ({doc, show, onClose, folder}) => {
 
     const Options = () => {
         const actions = [
-            ["option", "Copy cell"], ["option", "Release container"], ["option", "Lock container"], ["option", "Set auto lock"], ["option", "Accept colli and weight differences"], ["option", "Clear accepted differences"], ["option clickable", "Modify colli and B/L weight", modWeight], ["option clickable", "Modify POD", modPod], ["option", "Edit/add container note"], ["option", "Edit cust ref note"], ["option", "View consignee and consignor", consign], ["option", "Change status to wait at (5)"], ["option", "Change status to locked (7)"], ["option", "Change status to done (8nd)"], ["option", "Change status to cancel (8nc)"], ["option", "Change status to open (201)"], ["option", "Change status to error (210)"], ["option", "View"], ["option", "Compact container no"]];
+            ["option", "Copy cell"], ["option", "Release container"], ["option", "Lock container"], ["option", "Set auto lock"], ["option", "Accept colli and weight differences"], ["option", "Clear accepted differences"], ["option clickable", "Modify colli and B/L weight", modWeight], ["option clickable", "Modify POD", modPod], ["option", "Edit/add container note"], ["option", "Edit cust ref note"], ["option clickable", "View consignee and consignor", consign], ["option", "Change status to wait at (5)"], ["option", "Change status to locked (7)"], ["option", "Change status to done (8nd)"], ["option", "Change status to cancel (8nc)"], ["option", "Change status to open (201)"], ["option", "Change status to error (210)"], ["option", "View"], ["option", "Compact container no"]];
         return (
             <ul className="popup-options">
             {actions.map((action, index) => (

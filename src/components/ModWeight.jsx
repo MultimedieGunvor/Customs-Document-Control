@@ -32,29 +32,31 @@ const ModWeight = ({BL, folder, onClose}) => {
             <h2>Modify weight</h2>
             <div>
                 <legend>Folder no</legend>
-                <div>{folder.folderNo}</div>
+                <div className="weight-folder">{folder.folderNo}</div>
             </div>
             <div>
                 <legend>B/L</legend>
-                <div>{BL[0]}</div>
+                <div className="weight-bl">{BL[0]}</div>
             </div>
             <div>
                 <legend>Container</legend>
-                <div>{BL[1].container}</div>
+                <div className="weight-container">{BL[1].container}</div>
             </div>
-            <div>
-                <div>
+            <div className="weight-inputs">
+                <div className="w-colli">
                     <legend>Colli</legend>
                     <input 
+                        className="weight-colli"
                         type="number" 
                         name="ciBl"
                         value={Value.ciBl || BL[1].ciBl}
                         onChange={(e) => handleChange(e)}>
                     </input>
                 </div>
-                <div>
+                <div className="w-weight">
                     <legend>Weight</legend>
                     <input 
+                        className="weight-weight"
                         type="number" 
                         name="wBl" 
                         value={Value.wBl || BL[1].wBl}
@@ -62,7 +64,7 @@ const ModWeight = ({BL, folder, onClose}) => {
                     </input>
                 </div>
             </div>
-            <div>
+            <div className="weight-btns">
                 <div className="cancel btn" onClick={onClose}>Cancel</div>
                 <div className="ok btn"
                 onClick={() => {

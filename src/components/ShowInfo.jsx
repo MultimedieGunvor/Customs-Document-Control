@@ -15,8 +15,20 @@ export default function ShowInfo ({info}) {
         }
     };
 
+    function getEDI(obj) {
+        const entries = Object.entries(obj);
+        const sortedEntries = entries.toSorted();
+        return (
+            <div>
+                {sortedEntries.map((entry) => (
+                    <div key={entry[1]}>{entry[1]}</div>
+                ))}
+            </div>
+        )
+    };
+
     const ManifestInfo = () => {
-        const Info = [["Folder no", info.folderNo], ["Folder type", info.type], ["Primary MOT", info.primaryMot], ["Call info", info.callInfo === "" ? "No call info" : info.callInfo], ["Terminal LoCode", info.terminalLoCode], ["Terminal ID", info.terminalId], ["ETA date", etaDate], ["Master status", info.masterStatus]];
+        const Info = [["Folder no", info.folderNo], ["Folder type", info.type], ["Primary MOT", info.primaryMot], ["Call info", info.callInfo === "" ? "No call info" : info.callInfo], ["Terminal LoCode", info.terminalLoCode], ["Terminal ID", info.terminalId], ["ETA date", etaDate], ["Master status", info.status]];
         return (
             <div className="manifest-info">
                 {Info.map((item) => (
@@ -67,20 +79,20 @@ export default function ShowInfo ({info}) {
                 </div>
             </div>
             <div className="edi-log">
-                <div>EDI log</div>
-                <div>{info.ediLog}</div> {/* Tjek, om den renderer, eller om den skal pilles ved */}
+                <div className="edi-name">EDI log</div>
+                <div className="edi-content">{getEDI(info.ediLog)}</div> 
             </div>
             <div className="vsa-info" placeholder="VSA info">VSA info</div>
             <div className="toggles">
                 <div className="toggle">
-                    <label for="show-canceled">Show canceled</label>
+                    <label className="toggle-name">Show canceled</label>
                     <label className="switch">
                         <input type="checkbox" id="show-canceled"/>
                         <span className="slider"></span>
                     </label>
                 </div>
                 <div className="toggle">
-                    <label for="show-notify">Show notify</label>
+                    <label className="toggle-name">Show notify</label>
                     <label className="switch">
                         <input type="checkbox" id="show-notify"/>
                         <span className="slider"></span>

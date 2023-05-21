@@ -58,7 +58,7 @@ export default function Launcher() {
         }
     }
     return (
-        <div>
+        <div className="launcher-page">
             <h1>Manifest list</h1>
             <div className="filter-box">
                 <div className="range">
@@ -103,6 +103,7 @@ export default function Launcher() {
                     <div>PICit</div>
                 </div>
                 <div className="party2"> {/* Hvis tid: generér dynamisk ud fra manifest-data */}
+                    <legend>Party</legend>
                     <div>PICit</div>
                 </div>
             </div>
