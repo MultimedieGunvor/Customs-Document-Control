@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import Popup from "./Popup";
+import Sums from "./Sums";
 // import Hover from "./Hover";
 
 export default function ShowDocs ({documents}) {
@@ -9,7 +10,44 @@ export default function ShowDocs ({documents}) {
     const [content, setContent] = useState([]);
     const [show, setShow] = useState(false);
     const [DocKey, setDocKey] = useState();
+    const [Selected, setSelected] = useState([]);
+    const [sums, setSums] = useState([ // -- index 0 = cibl, index 1 = cicust, index 2 = wbl, index 3 = wcust
+        0, 0, 0, 0
+    ]);
     // const [hover, setHover] = useState(null);
+
+    function updateSums(selected) { // selected[0] er BL, selected[1].ciBl er CI BL etc.
+        const copySums = [...sums];
+        if(Selected.includes(selected[0])) {
+            const copySelected = [...Selected];
+            const index = copySelected.indexOf(selected[0]);
+            if (index > -1) {
+                copySelected.splice(index, 1);
+            }
+            setSelected(copySelected);
+            console.log("copySelected : ", copySelected);
+
+            copySums[0] = copySums[0] - selected[1].ciBl;
+            copySums[1] = copySums[1] - selected[1].ciCust;
+            copySums[2] = copySums[2] - selected[1].wBl;
+            copySums[3] = copySums[3] - selected[1].wCust;
+            console.log("copySums after subtraction: ", copySums);
+            setSums(copySums);
+        } else {
+            const copySelected = [...Selected];
+            copySelected.push(selected[0]);
+            setSelected(copySelected);
+            console.log("copySelected: ", copySelected);
+
+            copySums[0] = copySums[0] + selected[1].ciBl;
+            copySums[1] = copySums[1] + selected[1].ciCust;
+            copySums[2] = copySums[2] + selected[1].wBl;
+            copySums[3] = copySums[3] + selected[1].wCust;
+            console.log("copySums after addition: ", copySums);
+            setSums(copySums);
+        }
+
+    }
 
     function getCustRefs(obj) {
         const values = Object.values(obj);
@@ -55,13 +93,14 @@ export default function ShowDocs ({documents}) {
 
     const DocContents = () => {
         return (
-        content.map((item) => (
-            <div className="docs-content"
+        content.map((item) => ( // -- Add grid hoverboxes here? Show based on hover value?
+            <div className={Selected.includes(item[0])? "docs-content selected" : "docs-content"}
             key={item[0]}
-            onClick={() => {
+            onDoubleClick={() => {
                 show === false ? setShow(true) : setShow(false)
                 getDocKey(item[0])
-            }}>
+            }}
+            onClick={updateSums(item)}>
                 <div>{item[1].cdcStatus}</div>
                 <div>{item[0]}</div>
                 <div className="char-limit">{item[1].container}</div>
@@ -109,9 +148,12 @@ export default function ShowDocs ({documents}) {
     };
 
     return (
-        <div className="docs-box">
-            <DocHeaders />
-            <DocContents />
-        </div>
+        <>
+            <div className="docs-box">
+                <DocHeaders />
+                <DocContents />
+            </div>
+            <Sums documents={documents} sums={sums}/>
+        </>
     );
 }
