@@ -105,7 +105,8 @@ export default function ShowDocs ({documents}) {
             setContent(Test);
             console.log("Test: ", Test);
         } else {
-            setContent(content);
+            const filtered = content.filter((BL) => BL[1].cdcStatus !== "Cancel (8nc)");
+            setContent(filtered);
         }
     });
 
