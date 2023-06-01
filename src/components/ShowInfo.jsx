@@ -1,4 +1,5 @@
 import { Timestamp } from "firebase/firestore";
+import { useState } from "react";
 
 export default function ShowInfo ({info}) {
     const secs = info.etaDate.seconds;
@@ -6,6 +7,14 @@ export default function ShowInfo ({info}) {
     const nanosecs = info.etaDate.nanoseconds;
     const eta = new Timestamp(secs, nanosecs);
     const etaDate = eta.toDate().toLocaleDateString();
+    const [checked, setChecked] = useState(true);
+
+    const handleCanceled = () => {
+        setChecked(!checked);
+        console.log("Checkbox is: ", checked);
+        sessionStorage.setItem('cancel', checked);
+        window.dispatchEvent(new Event('filter'));
+    };
 
     const checkType = (a, b) => {
         if (info.type === "import") {
@@ -85,9 +94,9 @@ export default function ShowInfo ({info}) {
             <div className="vsa-info" placeholder="VSA info">VSA info</div>
             <div className="toggles">
                 <div className="toggle">
-                    <label className="toggle-name">Show canceled</label>
+                    <label className="toggle-name">Show canceled</label> {/* Skriv funktion, der genererer event, når man toggler on og off */}
                     <label className="switch">
-                        <input type="checkbox" id="show-canceled"/>
+                        <input type="checkbox" id="show-canceled" onChange={handleCanceled}/>
                         <span className="slider"></span>
                     </label>
                 </div>

@@ -8,6 +8,7 @@ import Sums from "./Sums";
 export default function ShowDocs ({documents}) {
 
     const [content, setContent] = useState([]);
+    const [Test, setTest] = useState([]);
     const [show, setShow] = useState(false);
     const [DocKey, setDocKey] = useState();
     const [Selected, setSelected] = useState([]);
@@ -16,38 +17,39 @@ export default function ShowDocs ({documents}) {
     ]);
     // const [hover, setHover] = useState(null);
 
-    function updateSums(selected) { // selected[0] er BL, selected[1].ciBl er CI BL etc.
-        const copySums = [...sums];
-        if(Selected.includes(selected[0])) {
-            const copySelected = [...Selected];
-            const index = copySelected.indexOf(selected[0]);
-            if (index > -1) {
-                copySelected.splice(index, 1);
-            }
+    function handleSelect(clickItem) {
+        const copySelected = [...Selected];
+        if (Selected.includes(clickItem)) {
+            const index = copySelected.indexOf(clickItem);
+            copySelected.splice(index, 1);
+            console.log(clickItem, " removed from Selected");
             setSelected(copySelected);
-            console.log("copySelected : ", copySelected);
+        } else {
+            copySelected.push(clickItem);
+            console.log(clickItem, " added to Selected");
+            setSelected(copySelected);
+        }
+        console.log("Selected: ", Selected);
+    };
 
-            copySums[0] = copySums[0] - selected[1].ciBl;
-            copySums[1] = copySums[1] - selected[1].ciCust;
-            copySums[2] = copySums[2] - selected[1].wBl;
-            copySums[3] = copySums[3] - selected[1].wCust;
-            console.log("copySums after subtraction: ", copySums);
+    function handleSums(clickItem) {
+        let copySums = [...sums];
+        if (!Selected.includes(clickItem[0])) {
+            copySums[0] = copySums[0] + clickItem[1].ciBl;
+            copySums[1] = copySums[1] + clickItem[1].ciCust;
+            copySums[2] = copySums[2] + clickItem[1].wBl;
+            copySums[3] = copySums[3] + clickItem[1].wCust;
+            console.log("sums after addition: ", copySums);
             setSums(copySums);
         } else {
-            const copySelected = [...Selected];
-            copySelected.push(selected[0]);
-            setSelected(copySelected);
-            console.log("copySelected: ", copySelected);
-
-            copySums[0] = copySums[0] + selected[1].ciBl;
-            copySums[1] = copySums[1] + selected[1].ciCust;
-            copySums[2] = copySums[2] + selected[1].wBl;
-            copySums[3] = copySums[3] + selected[1].wCust;
-            console.log("copySums after addition: ", copySums);
+            copySums[0] = copySums[0] - clickItem[1].ciBl;
+            copySums[1] = copySums[1] - clickItem[1].ciCust;
+            copySums[2] = copySums[2] - clickItem[1].wBl;
+            copySums[3] = copySums[3] - clickItem[1].wCust;
+            console.log("sums after subtraction: ", copySums);
             setSums(copySums);
         }
-
-    }
+    };
 
     function getCustRefs(obj) {
         const values = Object.values(obj);
@@ -70,9 +72,22 @@ export default function ShowDocs ({documents}) {
                 const dataRef = doc(db, "manifests", documents.id);
                 const res = await getDoc(dataRef);
                 const test = Object.entries(res.data().docs);
-                console.log("Fetched manifest-data: ", test);
-                setContent(test);
-                return test;
+                const filteredBLs = test.filter((BL) => BL[1].cdcStatus !== "Cancel (8nc)");
+                console.log("filteredBLs: ", filteredBLs);
+                console.log("Fetched manifest-data: ", test); // Tilføj eventListener, og filtrér efter canceled-status. Default er at filtrere canceled fra
+                setContent(filteredBLs);
+                setTest(test);
+                // window.addEventListener('filter', () => {
+                //     const showscancel = sessionStorage.getItem('cancel');
+                //     console.log("sessionStorage: ", showscancel);
+                //     if (!showscancel === false) {
+                //         setContent(test);
+                //     } else {
+                //         setContent(filteredBLs);
+                //     }
+                // })
+                
+                // return test;
             } catch (err) {
                 console.log("Error: ", err);
             }
@@ -81,7 +96,18 @@ export default function ShowDocs ({documents}) {
         window.addEventListener('update', () => {
             fetchData();
         });
+
     }, [documents.id]);
+    window.addEventListener('filter', () => {
+        const showscancel = sessionStorage.getItem('cancel');
+        console.log("sessionStorage: ", showscancel);
+        if (!showscancel === false) {
+            setContent(Test);
+            console.log("Test: ", Test);
+        } else {
+            setContent(content);
+        }
+    });
 
     const checkType = (a, b) => {
         if (documents.type === "import") {
@@ -100,7 +126,10 @@ export default function ShowDocs ({documents}) {
                 show === false ? setShow(true) : setShow(false)
                 getDocKey(item[0])
             }}
-            onClick={updateSums(item)}>
+            onClick={() => {
+                handleSelect(item[0])
+                handleSums(item)
+            }}>
                 <div>{item[1].cdcStatus}</div>
                 <div>{item[0]}</div>
                 <div className="char-limit">{item[1].container}</div>

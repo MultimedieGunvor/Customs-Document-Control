@@ -294,11 +294,13 @@ input:checked + .slider:before {
 
 /* --- Show Docs --- */
 .docs-box { 
-  /* Tilføj padding her */
   font-size: small;
   margin-top: 20px;
   border: 1px solid var(--grey2);
   border-radius: 15px;
+  min-height: 65vh;
+  max-height: 65vh;
+  overflow-y: auto;
 }
 .docs-header-box {
   display: grid;
@@ -306,32 +308,28 @@ input:checked + .slider:before {
   grid-template-rows: 1fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
-  /* display: flex; */
   background-color: var(--grey1);
   color: var(--grey4);
   padding: 3px;
 }
-/* .docs-header-box > div {
-  min-width: 76px;
-  max-width: 76px;
-} */
 .docs-content {
   display: grid;
   grid-template-columns: repeat(25, 1fr);
   grid-template-rows: 1fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
-  /* display: flex; */
   cursor: pointer;
   padding: 3px;
 }
-/* .docs-content > div {
-  min-width: 76px;
-  max-width: 76px;
-  position: relative;
-} */
 .docs-content:nth-child(odd) {
   background-color: var(--grey1);
+}
+.selected {
+  background-color: var(--green4);
+  color: var(--white);
+}
+.selected:nth-child(odd) {
+  background-color: var(--green4);
 }
 .docs-content:hover {
   background-color: var(--green3);
@@ -356,6 +354,28 @@ input:checked + .slider:before {
   background-color: var(--white);
   color: var(--black);
 } */
+/* --- Sums --- */
+.btm-functions {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 10px;
+  grid-row-gap: 0px;
+  padding-top: 10px;
+}
+.btm-functions > div {
+  max-width: 200px
+}
+.btm-functions > div > legend {
+  color: var(--grey4);
+}
+.btm-functions > div > div {
+  background-color: var(--grey1);
+  border: 1px solid var(--grey2);
+  border-radius: 15px;
+  color: var(--black);
+  padding: 3px;
+}
 /* --- Popup --- */
 .popup {
   position: fixed;

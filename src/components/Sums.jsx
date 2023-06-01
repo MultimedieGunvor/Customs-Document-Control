@@ -1,9 +1,10 @@
 
 export default function Sums ({documents, sums}) {
-    const CDC = Object.keys(documents); // Then use CDC.length in the return
-    const containers = Object.entries(documents);
+    const CDC = Object.entries(documents.docs);
+    console.log("CDC :", CDC);
     let CONTAINERS = [];
-    containers.forEach(element => CONTAINERS.push(element.docs.containers)); // Then use CONTAINERS.length in the return
+    CDC.forEach(element => CONTAINERS.push(element[1].container));
+    console.log("CONTAINERS: ", CONTAINERS);
 
     return (
         <div className="btm-functions">
