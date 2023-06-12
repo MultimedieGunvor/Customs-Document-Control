@@ -3,35 +3,20 @@ import { useState } from "react";
 
 export default function ShowInfo ({info}) {
     const secs = info.etaDate.seconds;
-    // console.log("secs type: ", typeof secs);
     const nanosecs = info.etaDate.nanoseconds;
     const eta = new Timestamp(secs, nanosecs);
     const etaDate = eta.toDate().toLocaleDateString();
-    const [checked, setChecked] = useState(true);
-    const [values, setValues] = useState({cancel: true, notify: true});
-
-    const handleCanceled = () => {
-        setChecked(!checked);
-        console.log("Checkbox is: ", checked);
-        sessionStorage.setItem('cancel', checked);
-        window.dispatchEvent(new Event('cancel'));
-    };
+    const [values, setValues] = useState({cancel: false, notify: false});
 
     const handleNotify = (e) => {
         const toggle = e.target.name;
         let value = values[toggle] === true ? false : true;
-        // console.log("value: ", value);
         setValues(existingValues => ({
             ...existingValues,
             [toggle]: value,
         }));
-        // console.log("values[toggle] is: ", values[toggle]);
-        // console.log("e.target.value is: ", e.target.value);
-        // console.log("toggle: ", toggle);
         sessionStorage.setItem(toggle, value);
-        // sessionStorage.setItem(e.target.name, e.target.value);
         window.dispatchEvent(new Event(toggle));
-        // console.log(sessionStorage);
     };
 
     const checkType = (a, b) => {
@@ -114,7 +99,7 @@ export default function ShowInfo ({info}) {
                 <div className="toggle">
                     <label className="toggle-name">Show canceled</label>
                     <label className="switch">
-                        <input type="checkbox" id="show-canceled" onChange={handleCanceled}/>
+                        <input type="checkbox" id="cancel" name="cancel" value={values.cancel} onChange={handleNotify}/>
                         <span className="slider"></span>
                     </label>
                 </div>

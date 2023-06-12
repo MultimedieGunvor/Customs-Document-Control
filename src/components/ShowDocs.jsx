@@ -15,6 +15,7 @@ export default function ShowDocs ({documents}) {
     const [sums, setSums] = useState([ // -- index 0 = cibl, index 1 = cicust, index 2 = wbl, index 3 = wcust
         0, 0, 0, 0
     ]);
+    const [togglefilter, setTogglefilter] = useState();
     // const [hover, setHover] = useState(null);
 
     function handleSelect(clickItem) {
@@ -73,8 +74,6 @@ export default function ShowDocs ({documents}) {
                 const res = await getDoc(dataRef);
                 const test = Object.entries(res.data().docs);
                 const filteredBLs = test.filter((BL) => BL[1].cdcStatus !== "Cancel (8nc)");
-                // console.log("filteredBLs: ", filteredBLs);
-                // console.log("Fetched manifest-data: ", test); 
                 setContent(filteredBLs);
                 setTest(test);
             } catch (err) {
@@ -100,40 +99,48 @@ export default function ShowDocs ({documents}) {
     });
 
     const checkType = (a, b) => {
-        // addEventListener
-        if (documents.type === "import") { // if (documents.type === "import" && showsnotify === undefined)
+        if (documents.type === "import") {
             return a
-        } else { // else if (documents.type === "export" && showsnotify === undefined)
+        } else {
             return b
-        } // else return c
+        }
     };
 
     let showsnotify;
     window.addEventListener('notify', () => {
         showsnotify = sessionStorage.getItem('notify');
         console.log("showsnotify: ", showsnotify);
-        return showsnotify;
+        checkFilter();
     });
-
+    
     const checkNotify = (a, b, c) => {
-        // let showsnotify;
-        // console.log("showsnotify: ", showsnotify);
-        // window.addEventListener('notify', () => {
-        //     showsnotify = sessionStorage.getItem('notify');
-        //     console.log("showsnotify: ", showsnotify);
-        //     return showsnotify;
-        // });
-        if (documents.type === "import" && !showsnotify) {
-            console.log(typeof showsnotify);
-            return a
-        } else if (documents.type === "import" && showsnotify === false) {
-            return a
-        } else if (documents.type === "export" && !showsnotify) {
-            return b
-        } else if (documents.type === "export" && showsnotify === false) {
-            return b
+        if (!togglefilter) {
+            if (documents.type === "import") {
+                return a
+            } else {
+                return b
+            }
         } else {
-            return c
+            if(togglefilter === "a") {
+                return a
+            } else if (togglefilter === "b") {
+                return b
+            } else {
+                return c
+            }
+        }
+    };
+
+    function checkFilter () {
+        if (documents.type === "import" && showsnotify === "false") {
+            console.log(typeof showsnotify);
+            setTogglefilter("a");
+        } else if (documents.type === "export" && showsnotify === "false") {
+            console.log(typeof showsnotify);
+            setTogglefilter("b");
+        } else {
+            console.log(typeof showsnotify);
+            setTogglefilter("c");
         }
     };
 
@@ -163,7 +170,7 @@ export default function ShowDocs ({documents}) {
                 {/* {hover === getCustRefs(item[1].custRef) ? (<Hover props={getCustRefs(item[1].custRef)}/>) : ("")} */}
                 </div>
                 <div>{item[1].statusCode}</div>
-                <div className="char-limit">{checkType(item[1].consignee, item[1].consignor)}</div> {/* Plus notify party */}
+                <div className="char-limit">{checkNotify(item[1].consignee, item[1].consignor, item[1].notifyParty)}</div>
                 <div>{item[1].m}</div>
                 <div className="char-limit">{item[1].custRefType}</div> 
                 <div>{item[1].itemNo}</div>
@@ -187,7 +194,7 @@ export default function ShowDocs ({documents}) {
 
     const DocHeaders = () => {
         const headers = ["CDC Status", "B/L", "Container", "L/R", "Vet", "Pol/Pod", "Cust Ref", "Status Code", checkNotify("Consignee", "Consignor", "Notify Party"), "M", "Cust Ref Type", "Item No", "CI BL", "CI Cust", "W BL", "W Cust", "Trns Doc Type", "MIG Responsible", "Customs Status", "Customs Data", "Container Note", "Cust Ref Note", "Disc Reason", "SKAT Manifest Status", checkType("Delivery Place", "Authority Note")];
-        return ( // Husk notify party i Consignee/consignor!
+        return (
             <div className="docs-header-box">
             {headers.map((header, index) => (
                 <div key={header+index} className="char-limit">{header}</div>
